@@ -8,7 +8,7 @@
   "bugs": "https://github.com/modelcontextprotocol/servers/issues",
   "type": "module",
   "bin": {
-    "mcp-server-sysauto-ask": "dist/index.js"
+    "mcp-server-sysauto": "dist/index.js"
   },
   "files": [
     "dist"

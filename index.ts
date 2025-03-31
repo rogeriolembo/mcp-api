@@ -120,6 +120,6 @@ try {
 }
 
 runServer().catch((error) => {
-console.error("Erro fatal ao executar servidor MCP:", error);
-process.exit(1);
+	console.error("Erro fatal ao executar servidor MCP:", error);
+	process.exit(1);
 });
