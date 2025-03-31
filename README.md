@@ -1,13 +1,13 @@
-# Perplexity Ask MCP Server
+# sysauto Ask MCP Server
 
 An MCP server implementation that integrates the Sonar API to provide Claude with unparalleled real-time, web-wide research.
 
-![Demo](perplexity-ask/assets/demo_screenshot.png)
+![Demo](sysauto-ask/assets/demo_screenshot.png)
 
 
 ## Tools
 
-- **perplexity_ask**
+- **sysauto_ask**
   - Engage in a conversation with the Sonar API for live web searches.
   - **Inputs:**
     - `messages` (array): An array of conversation messages.
@@ -25,17 +25,17 @@ Clone this repository:
 git clone git@github.com:ppl-ai/modelcontextprotocol.git
 ```
 
-Navigate to the `perplexity-ask` directory and install the necessary dependencies:
+Navigate to the `sysauto-ask` directory and install the necessary dependencies:
 
 ```bash
-cd modelcontextprotocol/perplexity-ask && npm install
+cd modelcontextprotocol/sysauto-ask && npm install
 ```
 
 ### Step 2: Get a Sonar API Key
 
-1. Sign up for a [Sonar API account](https://docs.perplexity.ai/guides/getting-started).
+1. Sign up for a [Sonar API account](https://docs.sysauto.ai/guides/getting-started).
 2. Follow the account setup instructions and generate your API key from the developer dashboard.
-3. Set the API key in your environment as `PERPLEXITY_API_KEY`.
+3. Set the API key in your environment as `sysauto_API_KEY`.
 
 ### Step 3: Configure Claude Desktop
 
@@ -46,18 +46,18 @@ cd modelcontextprotocol/perplexity-ask && npm install
 ```json
 {
   "mcpServers": {
-    "perplexity-ask": {
+    "sysauto-ask": {
       "command": "docker",
       "args": [
         "run",
         "-i",
         "--rm",
         "-e",
-        "PERPLEXITY_API_KEY",
-        "mcp/perplexity-ask"
+        "sysauto_API_KEY",
+        "mcp/sysauto-ask"
       ],
       "env": {
-        "PERPLEXITY_API_KEY": "YOUR_API_KEY_HERE"
+        "sysauto_API_KEY": "YOUR_API_KEY_HERE"
       }
     }
   }
@@ -69,14 +69,14 @@ cd modelcontextprotocol/perplexity-ask && npm install
 ```json
 {
   "mcpServers": {
-    "perplexity-ask": {
+    "sysauto-ask": {
       "command": "npx",
       "args": [
         "-y",
-        "@modelcontextprotocol/server-perplexity-ask"
+        "@modelcontextprotocol/server-sysauto-ask"
       ],
       "env": {
-        "PERPLEXITY_API_KEY": "YOUR_API_KEY_HERE"
+        "sysauto_API_KEY": "YOUR_API_KEY_HERE"
       }
     }
   }
@@ -94,28 +94,28 @@ vim ~/Library/Application\ Support/Claude/claude_desktop_config.json
 Docker build:
 
 ```bash
-docker build -t mcp/perplexity-ask:latest -f Dockerfile .
+docker build -t mcp/sysauto-ask:latest -f Dockerfile .
 ```
 
 ### Step 5: Testing
 
-Let's make sure Claude for Desktop is picking up the two tools we've exposed in our `perplexity-ask` server. You can do this by looking for the hammer icon:
+Let's make sure Claude for Desktop is picking up the two tools we've exposed in our `sysauto-ask` server. You can do this by looking for the hammer icon:
 
-![Claude Visual Tools](perplexity-ask/assets/visual-indicator-mcp-tools.png)
+![Claude Visual Tools](sysauto-ask/assets/visual-indicator-mcp-tools.png)
 
 After clicking on the hammer icon, you should see the tools that come with the Filesystem MCP Server:
 
-![Available Integration](perplexity-ask/assets/available_tools.png)
+![Available Integration](sysauto-ask/assets/available_tools.png)
 
-If you see both of these this means that the integration is active. Congratulations! This means Claude can now ask Perplexity. You can then simply use it as you would use the Perplexity web app.  
+If you see both of these this means that the integration is active. Congratulations! This means Claude can now ask sysauto. You can then simply use it as you would use the sysauto web app.  
 
 ### Step 6: Advanced parameters
 
-Currently, the search parameters used are the default ones. You can modify any search parameter in the API call directly in the `index.ts` script. For this, please refer to the official [API documentation](https://docs.perplexity.ai/api-reference/chat-completions).
+Currently, the search parameters used are the default ones. You can modify any search parameter in the API call directly in the `index.ts` script. For this, please refer to the official [API documentation](https://docs.sysauto.ai/api-reference/chat-completions).
 
 ### Troubleshooting 
 
-The Claude documentation provides an excellent [troubleshooting guide](https://modelcontextprotocol.io/docs/tools/debugging) you can refer to. However, you can still reach out to us at api@perplexity.ai for any additional support or [file a bug](https://github.com/ppl-ai/api-discussion/issues). 
+The Claude documentation provides an excellent [troubleshooting guide](https://modelcontextprotocol.io/docs/tools/debugging) you can refer to. However, you can still reach out to us at api@sysauto.ai for any additional support or [file a bug](https://github.com/ppl-ai/api-discussion/issues). 
 
 
 ## License
