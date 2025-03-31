@@ -36,7 +36,6 @@ async function consultarEventosDoDia() {
             const errorText = await response.text();
             throw new Error(`Erro ao consultar API Sy Auto: ${response.status} ${errorText}`);
         }
-        // Defina explicitamente o tipo dos dados
         const data = (await response.json());
         if (data.eventos && Array.isArray(data.eventos)) {
             return JSON.stringify(data.eventos, null, 2);
@@ -59,7 +58,7 @@ const server = new Server({
 });
 // Handler para listar ferramentas disponíveis
 server.setRequestHandler(ListToolsRequestSchema, async () => ({
-    tools: SYAUTO_EVENTOS_TOOL,
+    tools: [SYAUTO_EVENTOS_TOOL],
 }));
 // Handler para chamada da ferramenta específica
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
@@ -80,11 +79,12 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         }
     }
     catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
         return {
             content: [
                 {
                     type: "text",
-                    text: `Erro ao processar solicitação: ${error.message}`,
+                    text: `Erro ao processar solicitação: ${message}`,
                 },
             ],
             isError: true,

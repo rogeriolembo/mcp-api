@@ -23,7 +23,7 @@ const SYAUTO_EVENTOS_TOOL: Tool = {
 };
 
 // Recupera URL e Token da API Sy Auto das variáveis de ambiente
-const SYAUTO_API_URL = "https://v1.syauto.com.br/api";
+const SYAUTO_API_URL = "https://v1.sysauto.com.br/api";
 const SYAUTO_API_TOKEN = process.env.SYAUTO_API_TOKEN;
 
 if (!SYAUTO_API_URL || !SYAUTO_API_TOKEN) {
