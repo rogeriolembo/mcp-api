@@ -11,15 +11,15 @@ import fetch from 'node-fetch';
 
 // Tool definition: Consultar eventos do dia na Sy Auto
 const SYAUTO_EVENTOS_TOOL: Tool = {
-name: "syauto_eventos_dia",
-description:
-	"Consulta os eventos registrados para o dia atual no sistema Sy Auto. " +
-	"Não requer parâmetros adicionais.",
-inputSchema: {
-	type: "object",
-	properties: {},
-	required: [],
-},
+	name: "syauto_eventos_dia",
+	description:
+		"Consulta os eventos registrados para o dia atual no sistema Sy Auto. " +
+		"Não requer parâmetros adicionais.",
+	inputSchema: {
+		type: "object",
+		properties: {},
+		required: [],
+	},
 };
 
 // Recupera URL e Token da API Sy Auto das variáveis de ambiente
