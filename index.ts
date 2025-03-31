@@ -74,7 +74,7 @@ const server = new Server(
 
 // Handler para listar ferramentas disponíveis
 server.setRequestHandler(ListToolsRequestSchema, async () => ({
-tools: [SYAUTO_EVENTOS_TOOL],
+	tools: SYAUTO_EVENTOS_TOOL,
 }));
 
 // Handler para chamada da ferramenta específica
