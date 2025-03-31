@@ -2,23 +2,21 @@
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { CallToolRequestSchema, ListToolsRequestSchema, } from "@modelcontextprotocol/sdk/types.js";
-import fetch from 'node-fetch';
+import fetch from "node-fetch";
 // Tool definition: Consultar eventos do dia na Sy Auto
 const SYAUTO_EVENTOS_TOOL = {
     name: "syauto_eventos_dia",
     description: "Consulta os eventos registrados para o dia atual no sistema Sy Auto. " +
-        "Não requer parâmetros adicionais.",
+        "Caso a data não seja fornecida, o dia atual será utilizado.",
     inputSchema: {
         type: "object",
         properties: {
             date: {
                 type: "string",
-                description: "date no formato YYYY-MM-DD. Se não for fornecido, o dia atual será utilizado.",
+                description: "Data no formato YYYY-MM-DD. Se não for fornecida, o dia atual será utilizado.",
                 example: "2023-10-01",
-                default: new Date().toISOString().split("T")[0],
-            }
+            },
         },
-        required: ["date"],
     },
 };
 // Recupera URL e Token da API Sy Auto das variáveis de ambiente
@@ -29,8 +27,9 @@ if (!SYAUTO_API_URL || !SYAUTO_API_TOKEN) {
     process.exit(1);
 }
 // Função para consultar eventos do dia na API Sy Auto
-async function consultarEventosDoDia() {
-    const url = `${SYAUTO_API_URL}/eventos/dia`;
+async function consultarEventosDoDia(date) {
+    const dataFormatada = date || new Date().toISOString().split("T")[0]; // Usa o dia atual se a data não for fornecida
+    const url = `${SYAUTO_API_URL}/eventos/dia?date=${encodeURIComponent(dataFormatada)}`;
     try {
         const response = await fetch(url, {
             method: "GET",
@@ -48,7 +47,7 @@ async function consultarEventosDoDia() {
             return JSON.stringify(data.eventos, null, 2);
         }
         else {
-            return "Nenhum evento encontrado para hoje.";
+            return "Nenhum evento encontrado para a data informada.";
         }
     }
     catch (error) {
@@ -70,9 +69,11 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
 // Handler para chamada da ferramenta específica
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
     try {
-        const { name } = request.params;
+        const { params } = request;
+        const name = params?.name;
         if (name === "syauto_eventos_dia") {
-            const result = await consultarEventosDoDia();
+            const date = params?.date;
+            const result = await consultarEventosDoDia(date);
             return {
                 content: [{ type: "text", text: result }],
                 isError: false,
@@ -88,12 +89,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     catch (error) {
         const message = error instanceof Error ? error.message : String(error);
         return {
-            content: [
-                {
-                    type: "text",
-                    text: `Erro ao processar solicitação: ${message}`,
-                },
-            ],
+            content: [{ type: "text", text: `Erro ao processar solicitação: ${message}` }],
             isError: true,
         };
     }
