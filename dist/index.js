@@ -69,6 +69,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
 // Handler para chamada da ferramenta específica
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
     try {
+        console.log("Chamada recebida:", request);
         const { params } = request;
         const name = params?.name;
         if (name === "syauto_eventos_dia") {

@@ -3,28 +3,28 @@
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
-CallToolRequestSchema,
-ListToolsRequestSchema,
-Tool,
+	CallToolRequestSchema,
+	ListToolsRequestSchema,
+	Tool,
 } from "@modelcontextprotocol/sdk/types.js";
 import fetch from "node-fetch";
 
 // Tool definition: Consultar eventos do dia na Sy Auto
 const SYAUTO_EVENTOS_TOOL: Tool = {
-name: "syauto_eventos_dia",
-description:
-	"Consulta os eventos registrados para o dia atual no sistema Sy Auto. " +
-	"Caso a data não seja fornecida, o dia atual será utilizado.",
-inputSchema: {
-	type: "object",
-	properties: {
-	date: {
-		type: "string",
-		description: "Data no formato YYYY-MM-DD. Se não for fornecida, o dia atual será utilizado.",
-		example: "2023-10-01",
+	name: "syauto_eventos_dia",
+	description:
+		"Consulta os eventos registrados para o dia atual no sistema Sy Auto. " +
+		"Caso a data não seja fornecida, o dia atual será utilizado.",
+	inputSchema: {
+		type: "object",
+		properties: {
+			date: {
+				type: "string",
+				description: "Data no formato YYYY-MM-DD. Se não for fornecida, o dia atual será utilizado.",
+				example: "2023-10-01",
+			},
+		},
 	},
-	},
-},
 };
 
 // Recupera URL e Token da API Sy Auto das variáveis de ambiente
@@ -32,8 +32,8 @@ const SYAUTO_API_URL = "https://v1.sysauto.com.br/api";
 const SYAUTO_API_TOKEN = process.env.SYAUTO_API_TOKEN;
 
 if (!SYAUTO_API_URL || !SYAUTO_API_TOKEN) {
-console.error("Erro: SYAUTO_API_URL e SYAUTO_API_TOKEN devem ser definidos.");
-process.exit(1);
+	console.error("Erro: SYAUTO_API_URL e SYAUTO_API_TOKEN devem ser definidos.");
+	process.exit(1);
 }
 
 // Função para consultar eventos do dia na API Sy Auto
@@ -81,12 +81,13 @@ const server = new Server(
 
 // Handler para listar ferramentas disponíveis
 server.setRequestHandler(ListToolsRequestSchema, async () => ({
-tools: [SYAUTO_EVENTOS_TOOL],
+	tools: [SYAUTO_EVENTOS_TOOL],
 }));
 
 // Handler para chamada da ferramenta específica
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
 try {
+	console.log("Chamada recebida:", request);
 	const { params } = request;
 	const name = params?.name as string | undefined;
 
