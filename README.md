@@ -82,3 +82,6 @@ cd mcp-api/sysauto-ask && npm install
   }
 }
 ```
+
+npm publish --access public
+npm publish

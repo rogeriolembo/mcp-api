@@ -17,8 +17,15 @@ const SYAUTO_EVENTOS_TOOL: Tool = {
     "Não requer parâmetros adicionais.",
   inputSchema: {
     type: "object",
-    properties: {},
-    required: [],
+    properties: {
+		date: {
+			type: "string",
+			description: "date no formato YYYY-MM-DD. Se não for fornecido, o dia atual será utilizado.",
+			example: "2023-10-01",
+			default: new Date().toISOString().split("T")[0],
+		}
+	},
+    required: ["date"],
   },
 };
 

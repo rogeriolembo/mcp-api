@@ -10,12 +10,19 @@ const SYAUTO_EVENTOS_TOOL = {
         "Não requer parâmetros adicionais.",
     inputSchema: {
         type: "object",
-        properties: {},
-        required: [],
+        properties: {
+            date: {
+                type: "string",
+                description: "date no formato YYYY-MM-DD. Se não for fornecido, o dia atual será utilizado.",
+                example: "2023-10-01",
+                default: new Date().toISOString().split("T")[0],
+            }
+        },
+        required: ["date"],
     },
 };
 // Recupera URL e Token da API Sy Auto das variáveis de ambiente
-const SYAUTO_API_URL = "https://v1.syauto.com.br/api";
+const SYAUTO_API_URL = "https://v1.sysauto.com.br/api";
 const SYAUTO_API_TOKEN = process.env.SYAUTO_API_TOKEN;
 if (!SYAUTO_API_URL || !SYAUTO_API_TOKEN) {
     console.error("Erro: SYAUTO_API_URL e SYAUTO_API_TOKEN devem ser definidos.");
